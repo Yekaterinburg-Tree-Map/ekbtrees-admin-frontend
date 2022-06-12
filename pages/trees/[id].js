@@ -2,12 +2,12 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { fetchTree } from '@/api/trees'
 import { fetchSpecies } from '@/api/species'
+import { treeStatuses, treePlantingTypes, conditionAssessments } from '@/utils/consts'
 import {
   Breadcrumb,
   Button,
   Container,
   Dimmer,
-  Divider,
   Form,
   Grid,
   Loader,
@@ -34,23 +34,23 @@ export default function Tree() {
       .then((data) => setSpecies(data.map(el => ({
         ...el,
         key: el.id,
-        value: el.id,
+        value: el.title,
         text: el.title,
       }))))
       .catch((err) => {
         console.error('error fetching species', err)
         setSpecies([])
       })
-  }, [router.query])
+  }, [treeId])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('asdasd')
+    console.log('handle submit')
   }
 
   return <>
     <Breadcrumb>
-      <Breadcrumb.Divider icon='left chevron' />
+      <Breadcrumb.Divider icon="left chevron"/>
       <Breadcrumb.Section
         link
         onClick={() => router.push('/trees')}
@@ -59,88 +59,89 @@ export default function Tree() {
       </Breadcrumb.Section>
     </Breadcrumb>
     {treeData && <Container>
-      <Segment>
-        <Form
-          onSubmit={handleSubmit}
-        >
+      <Form
+        onSubmit={handleSubmit}
+      >
+        <Segment>
           <Grid columns={2}>
             <Grid.Column>
               <Form.Dropdown
-                fluid
-                label='speciesSelect'
-                key='speciesSelect'
+                label="Порода"
+                key="speciesSelect"
                 options={species}
-                value={'aa'}
-                // value={treeData.species && {
-                //   key: treeData.species.id,
-                //   value: treeData.species.id,
-                //   text: treeData.species.title,
-                // } || null}
-                loading={!Boolean(species.length)}
+                selection
+                defaultValue={treeData.species.title}
+                loading={species.length === 0}
               />
               <Form.Input
-                label='Высота дерева в метрах'
-                type='number'
-                key='height'
+                label="Высота (в метрах)"
+                type="number"
+                key="height"
                 value={treeData.treeHeight || 0}
               />
-              <Form.Input 
-                label='numberOfTreeTrunks'
-                type='number'
-                key='numberOfTreeTrunks'
+              <Form.Input
+                label="Число стволов"
+                type="number"
+                key="numberOfTreeTrunks"
                 value={treeData.numberOfTreeTrunks || 0}
               />
               <Form.Input
-                label='trunkGirth'
-                type='number'
-                key='trunkGirth'
+                label="Обхват самого толстого ствола (в сантиметрах)"
+                type="number"
+                key="trunkGirth"
                 value={treeData.trunkGirth || 0}
               />
               <Form.Input
-                label='diameterOfCrown'
-                type='number'
-                key='diameterOfCrown'
+                label="Диаметр кроны (в метрах)"
+                type="number"
+                key="diameterOfCrown"
                 value={treeData.diameterOfCrown || 0}
               />
             </Grid.Column>
             <Grid.Column>
               <Form.Input
-                label='heightOfTheFirstBranch'
-                type='number'
-                key='heightOfTheFirstBranch'
+                label="Высота первой ветви от земли (в метрах)"
+                type="number"
+                key="heightOfTheFirstBranch"
                 value={treeData.heightOfTheFirstBranch || 0}
               />
-              <Form.Input
-                // todo use select instead of input
-                label='conditionAssessment'
-                type='number'
-                key='diameterOfCrown'
-                value={treeData.conditionAssessment || 0}
+              <Form.Dropdown
+                label="Визуальная оценка состояния"
+                selection
+                key="conditionAssessment"
+                defautValue={treeData.conditionAssessment}
+                options={conditionAssessments}
               />
               <Form.Input
-                label='age'
-                type='number'
-                key='age'
+                label="Возраст (в годах)"
+                type="number"
+                key="age"
                 value={treeData.age || 0}
               />
-              <Form.Input
-                label='treePlantingType'
-                type='text'
-                key='treePlantingType'
-                value={treeData.treePlantingType || ''}
+              <Form.Dropdown
+                selection
+                label="Тип посадки"
+                type="text"
+                key="treePlantingType"
+                defaultValue={treeData.treePlantingType}
+                options={treePlantingTypes}
               />
-              <Form.Input
-                label='status'
-                type='text'
-                key='status'
-                value={treeData.status || ''}
+              <Form.Dropdown
+                selection
+                label="Статус дерева"
+                type="text"
+                key="status"
+                defaultValue={treeData.status}
+                options={treeStatuses}
               />
             </Grid.Column>
           </Grid>
-          <Divider horizontal />
-          <Button type='submit' color='green'>Сохранить</Button>
-        </Form>
-      </Segment>
+        </Segment>
+        {/* TODO tree images */}
+        <Segment>
+          <Button type="submit" color="green">Сохранить</Button>
+        </Segment>
+      </Form>
     </Container> || <Dimmer active>
       <Loader/>
     </Dimmer>}

@@ -42,7 +42,7 @@ export default function Navigation() {
           <Button
             primary
             className={styles.loginButton}
-            // todo add logout
+            // TODO add logout
           >
             Выйти
           </Button>

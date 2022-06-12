@@ -1,13 +1,14 @@
 import { fetchTrees, deleteTree } from '@/api/trees'
+import { PaginationNext } from '@/components/PagninationNext/PaginationNext'
 import { useEffect, useState } from 'react'
-import { Button, Table, Pagination } from 'semantic-ui-react'
+import { Button, Table } from 'semantic-ui-react'
 import _ from 'lodash'
 import {useRouter} from "next/router"
 
 export default function Trees() {
   const [treePage, setTreePage] = useState([])
   const [offset, setOffset] = useState(0)
-  const [limit, setLimit] = useState(12)
+  const [limit, setLimit] = useState(10)
   const router = useRouter()
 
   const tableHeaders = [
@@ -49,7 +50,7 @@ export default function Trees() {
         setTreePage([])
         console.error(e)
       })
-  }, [])
+  }, [offset, limit])
 
   function handleRedirectToTreePage(treeId) {
     return () => router.push(`/trees/${treeId}`).catch(console.error)
@@ -95,8 +96,11 @@ export default function Trees() {
         ))}
       </Table.Body>
     </Table>
-    <Pagination
-      defaultActivePage={0}
+    <PaginationNext
+      offset={offset}
+      setOffset={setOffset}
+      limit={limit}
+      setLimit={setLimit}
     />
   </>)
 }

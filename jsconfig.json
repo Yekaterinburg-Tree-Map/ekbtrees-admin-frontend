@@ -6,7 +6,8 @@
       "@/api/*": ["api/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
-      "@/context/*": ["context/*"]
+      "@/context/*": ["context/*"],
+      "@/utils/*": ["utils/*"]
     }
   }
 }
