@@ -18,6 +18,7 @@ export default function Navigation() {
       </Header>
       <Menu pointing secondary>
         <Menu.Item
+          key='users'
           active={(router.pathname).includes('/users')}
         >
           <Link href="/users">
@@ -25,6 +26,7 @@ export default function Navigation() {
           </Link>
         </Menu.Item>
         <Menu.Item
+          key='trees'
           active={(router.pathname).includes('/trees')}
         >
           <Link href="/trees">

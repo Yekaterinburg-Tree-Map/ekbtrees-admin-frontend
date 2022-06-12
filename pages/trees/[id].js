@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { fetchTree } from '@/api/trees'
 import { fetchSpecies } from '@/api/species'
 import { treeStatuses, treePlantingTypes, conditionAssessments } from '@/utils/consts'
+import ImagePreview from '@/components/ImagePreview/ImagePreview'
 import {
   Breadcrumb,
   Button,
@@ -109,7 +110,7 @@ export default function Tree() {
                 label="Визуальная оценка состояния"
                 selection
                 key="conditionAssessment"
-                defautValue={treeData.conditionAssessment}
+                defautValue={treeData.conditionAssessment || 1}
                 options={conditionAssessments}
               />
               <Form.Input
@@ -137,7 +138,12 @@ export default function Tree() {
             </Grid.Column>
           </Grid>
         </Segment>
-        {/* TODO tree images */}
+        { treeData.fileIds.length && <Segment>
+          {treeData.fileIds.map((fileId) => <ImagePreview
+            key={fileId}
+            fileId={fileId}
+          />)}
+        </Segment> || <></>}
         <Segment>
           <Button type="submit" color="green">Сохранить</Button>
         </Segment>
