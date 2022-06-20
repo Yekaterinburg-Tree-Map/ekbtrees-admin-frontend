@@ -4,12 +4,11 @@
     position: relative;
     width: 200px;
     height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 }
 
 .imageContainer img {
-    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*margin: 5px;*/
 }

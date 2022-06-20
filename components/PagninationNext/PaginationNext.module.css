@@ -1,3 +1,13 @@
+.paginationNext {
+    display: flex;
+    flex-direction: row;
+}
+
 .select {
-/* TODO add margin-right, set fancy height */
+    position: relative;
+    margin: 2px 6px 0 0;
+}
+
+.pagination {
+    margin: 0 6px;
 }
