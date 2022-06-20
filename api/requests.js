@@ -36,9 +36,16 @@ async function post(url, body = {}, headers = {}) {
 }
 
 async function put(url, body = {}) {
-  const { body: response } = await superagent
+  const token = cookies.get('AccessToken')
+
+  const request = superagent
     .put(url)
     .send(body)
+
+  if (token) {
+    request.set('Authorization', `Bearer ${token}`)
+  }
+  const { body: response } = await request
   return response
 }
 

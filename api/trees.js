@@ -9,8 +9,8 @@ async function fetchTree(id) {
   return await requests.get(`${apiUrl}/tree/get/${id}`)
 }
 
-async function updateTree(id) {
-  return await requests.put(`${apiUrl}/tree/${id}`)
+async function updateTree(id, plain) {
+  return await requests.put(`${apiUrl}/tree/${id}`, plain)
 }
 
 async function deleteTree(id) {

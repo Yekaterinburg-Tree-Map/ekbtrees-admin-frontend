@@ -7,8 +7,9 @@ import {useRouter} from "next/router"
 
 export default function Users() {
   const [userPage, setUserPage] = useState([])
-  const [page, setPage] = useState(2)
   const [limit, setLimit] = useState(10)
+  const [total, setTotal] = useState(10)
+
   const router = useRouter()
 
   const tableHeaders = [
@@ -35,7 +36,7 @@ export default function Users() {
   ]
 
   useEffect(() => {
-    fetchUsers(page, limit)
+    fetchUsers(0, total)
       .then((result) => {
         console.log(result)
         setUserPage(result)
@@ -44,10 +45,10 @@ export default function Users() {
         setUserPage([])
         console.error(e)
       })
-  }, [page, limit])
+  }, [total])
 
-  function handleRedirectToUserPage(treeId) {
-    return () => router.push(`/users/${treeId}`).catch(console.error)
+  function handleRedirectToUserPage(userId) {
+    return () => router.push(`/users/${userId}`).catch(console.error)
   }
 
   return (<>
@@ -83,10 +84,9 @@ export default function Users() {
       </Table.Body>
     </Table>
     <PaginationNext
-      page={page}
-      setPage={setPage}
       limit={limit}
       setLimit={setLimit}
+      setTotal={setTotal}
     />
   </>)
 }

@@ -9,6 +9,7 @@ export default function Trees() {
   const [pending, setPending] = useState(false)
   const [treePage, setTreePage] = useState([])
   const [limit, setLimit] = useState(10)
+  const [total, setTotal] = useState(10)
   const router = useRouter()
 
   const tableHeaders = [
@@ -44,10 +45,10 @@ export default function Trees() {
   ]
 
   useEffect(() => {
-    const update = async (limit) => {
+    const update = async (total) => {
       setPending(true)
       try {
-        const data = await fetchTrees(0, limit)
+        const data = await fetchTrees(0, total)
         setTreePage(data)
       } catch (e) {
         console.error(e)
@@ -56,8 +57,8 @@ export default function Trees() {
       setPending(false)
     }
 
-    update(limit).catch(console.error)
-  }, [limit])
+    update(total).catch(console.error)
+  }, [total])
 
   function handleRedirectToTreePage(treeId) {
     return () => router.push(`/trees/${treeId}`).catch(console.error)
@@ -109,6 +110,7 @@ export default function Trees() {
     <PaginationNext
       limit={limit}
       setLimit={setLimit}
+      setTotal={setTotal}
     />
   </>)
 }
