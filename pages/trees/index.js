@@ -69,9 +69,11 @@ export default function Trees() {
   }
 
   return (<>
-    {pending && <Dimmer active>
-      <Loader>Идёт загрузка</Loader>
-    </Dimmer>}
+    {pending && <div className='dimmer'>
+      <Dimmer active>
+        <Loader>Идёт загрузка</Loader>
+      </Dimmer>
+    </div>}
     <Table striped color='green'>
       <Table.Header>
         <Table.Row>

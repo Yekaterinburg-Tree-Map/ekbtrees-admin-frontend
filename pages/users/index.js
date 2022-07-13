@@ -2,10 +2,11 @@ import { fetchUsers } from '@/api/users'
 
 import { PaginationNext } from '@/components/PagninationNext/PaginationNext'
 import { useEffect, useState } from 'react'
-import { Button, Table } from 'semantic-ui-react'
+import { Button, Dimmer, Loader, Table } from 'semantic-ui-react'
 import {useRouter} from "next/router"
 
 export default function Users() {
+  const [pending, setPending] = useState(false)
   const [userPage, setUserPage] = useState([])
   const [limit, setLimit] = useState(10)
   const [total, setTotal] = useState(10)
@@ -36,15 +37,19 @@ export default function Users() {
   ]
 
   useEffect(() => {
-    fetchUsers(0, total)
-      .then((result) => {
-        console.log(result)
-        setUserPage(result)
-      })
-      .catch((e) => {
+    const update = async (total) => {
+      setPending(true)
+      try {
+        const data = await fetchUsers(0, total)
+        setUserPage(data)
+      } catch (e) {
         setUserPage([])
         console.error(e)
-      })
+      }
+      setPending(false)
+    }
+
+    update(total).catch(console.error)
   }, [total])
 
   function handleRedirectToUserPage(userId) {
@@ -52,6 +57,11 @@ export default function Users() {
   }
 
   return (<>
+    {pending && <div className='dimmer'>
+      <Dimmer active>
+        <Loader>Идёт загрузка</Loader>
+      </Dimmer>
+    </div>}
     <Table striped color='green'>
       <Table.Header>
         <Table.Row>

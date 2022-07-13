@@ -9,5 +9,15 @@ module.exports = {
     EKBTREES_SERVER_URL,
     EKBTREES_AUTH_URL,
     EKBTREES_BASE_URL
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/auth/:path*',
+        destination: 'https://ekb-trees-help.ru/auth/:path*', // Proxy to Backend
+        basePath: false,
+      }
+    ]
   }
 }
