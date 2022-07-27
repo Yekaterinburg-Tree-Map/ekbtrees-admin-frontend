@@ -1,0 +1,47 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: 'Build & Publish'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "Set up QEMU"
+        uses: docker/setup-qemu-action@v1
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v1
+
+      - name: "Login to GitHub Registry"
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: "Fr1tzler"
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: "Build&Deploy template-site"
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/ekbtrees-admin-frontend:latest
+          secrets: |
+            "ASPNETCORE_ENVIRONMENT=Release"
+          build-args: |
+            build_mode=Release
+
+      - name: "Run deploy on server"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ekbtrees-admin-frontend
+            sudo docker-compose pull
+            sudo docker-compose up -d
