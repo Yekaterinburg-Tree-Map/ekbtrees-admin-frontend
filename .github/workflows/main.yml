@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/ekbtrees-admin-frontend:latest
+          tags: ghcr.io/fr1tzler/ekbtrees-admin-frontend:latest
           secrets: |
             "ASPNETCORE_ENVIRONMENT=Release"
           build-args: |
