@@ -10,10 +10,11 @@ RUN yarn
 
 COPY api ./api
 COPY components ./components
-COPY hooks ./hooks
+COPY context ./context
 COPY pages ./pages
 COPY public ./public
 COPY styles ./styles
+COPY utils ./utils
 COPY next.config.js ./next.config.js
 
 RUN yarn build
