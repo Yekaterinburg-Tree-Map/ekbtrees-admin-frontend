@@ -8,6 +8,7 @@ COPY package.json ./package.json
 
 RUN yarn
 
+COPY jsconfig.json ./jsconfig.json
 COPY api ./api
 COPY components ./components
 COPY context ./context
