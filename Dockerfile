@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 ENV NODE_ENV=production
 
@@ -6,14 +6,16 @@ WORKDIR /app
 
 COPY package.json ./package.json
 
-RUN npm install --production
+RUN yarn
 
-COPY pages pages
-COPY public public
-COPY src src
-COPY styles styles
-COPY next.config.js next.config.js
+COPY api ./api
+COPY components ./components
+COPY hooks ./hooks
+COPY pages ./pages
+COPY public ./public
+COPY styles ./styles
+COPY next.config.js ./next.config.js
 
-RUN npm run build
+RUN yarn build
 
 CMD ["npm", "start"]
