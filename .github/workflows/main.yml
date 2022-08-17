@@ -4,6 +4,23 @@ on:
     branches:
       - master
 jobs:
+  update-compose-file:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy file via ssh
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          source: "docker-compose.yaml"
+          target: "admin/docker-compose.yaml"
+          strip_components: 1
+
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     steps:
@@ -44,5 +61,6 @@ jobs:
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
             ls -la
+            cd admin
             docker-compose pull
             docker-compose up -d
