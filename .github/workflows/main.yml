@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.PROD_USERNAME }}
           key: ${{ secrets.PROD_SSH_KEY }}
           source: "docker-compose.yaml"
-          target: "admin/docker-compose.yaml"
+          target: "admin"
           strip_components: 1
 
   build-and-push-docker-image:
