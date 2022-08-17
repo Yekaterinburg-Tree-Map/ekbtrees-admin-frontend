@@ -44,6 +44,6 @@ jobs:
           username: ${{ secrets.PROD_USERNAME }}
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
-            cd ekbtrees-admin-frontend
+            ls -la
             docker-compose pull
             docker-compose up -d
