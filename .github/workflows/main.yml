@@ -60,5 +60,6 @@ jobs:
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
             cd admin
+            docker-compose down -v --remove-orphans
             docker-compose pull
             docker-compose up -d
