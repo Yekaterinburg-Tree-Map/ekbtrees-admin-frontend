@@ -3,7 +3,7 @@ version: '3.4'
 services:
   ekbtrees-admin-frontend:
     container_name: ekbtrees-admin
-    image: ghcr.io/fr1tzler/ekbtrees-admin-frontend:latest
+    image: donkeyhott/ekbtrees-admin-frontend:latest
     restart: always
     ports:
       - "3000:3000"
