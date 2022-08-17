@@ -59,7 +59,6 @@ jobs:
           username: ${{ secrets.PROD_USERNAME }}
           key: ${{ secrets.PROD_SSH_KEY }}
           script: |
-            ls -la
             cd admin
             docker-compose pull
             docker-compose up -d
