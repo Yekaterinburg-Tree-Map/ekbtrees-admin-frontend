@@ -5,6 +5,8 @@ const EKBTREES_BASE_URL = process.env.EKBTREES_BASE_URL || 'https://ekb-trees-he
 module.exports = {
   reactStrictMode: true,
 
+  basePath: '/admin',
+
   publicRuntimeConfig: {
     EKBTREES_SERVER_URL,
     EKBTREES_AUTH_URL,
